@@ -35,7 +35,7 @@ userSchema.pre('save', async function (next) {
     return next(err); // next(err) goes to errorHandler
   }
 })
-// bcrypt middleware to compare hashed password
+// bcrypt middleware to compare hashed password, we called comparePassword
 userSchema.method.comparePassword = async function (candidatePassword, next) {
   try {
     let isMatch = await bcrypt.compare(candidatePassword, this.password);
