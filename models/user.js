@@ -21,6 +21,30 @@ const userSchema = new mongoose.Schema({
   }
 })
 
+//bcrypt middleware before save of user model
+userSchema.pre('save', async function (next) {
+  try {
+    if (!this.isModified('password')) { //if paswrd isnt modified, move on, dont hash it again
+      return next() // next == save
+    }
+    //hashing password
+    let hashedPassword = await bcrypt.hash(this.password, 10); // 10 == saltRounds
+    this.password = hashedPassword;
+    return next() // next == save
+  } catch (err) {
+    return next(err); // next(err) goes to errorHandler
+  }
+})
+// bcrypt middleware to compare hashed password
+userSchema.method.comparePassword = async function (candidatePassword, next) {
+  try {
+    let isMatch = await bcrypt.compare(candidatePassword, this.password);
+    return isMatch; //isMatch returns boolean
+  } catch (err) {
+    return next(err)
+  }  
+}
+
 const User = mongoose.model("User", userSchema);
 
 module.exports = User;
