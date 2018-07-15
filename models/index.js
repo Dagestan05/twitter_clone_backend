@@ -10,3 +10,4 @@ mongoose.connect("mongodb://localhost/twitterclone", {
 
 
 module.exports.User = require("./user")
+module.exports.Message = require("./message")
