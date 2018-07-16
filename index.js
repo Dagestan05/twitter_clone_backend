@@ -24,7 +24,21 @@ app.use(
   ensureCorrectUser,
   messagesRoutes
 );
+//get all messages of a specfic user
+app.get("/api/messages", loginRequired, async function(req, res, next) {
+  try {
+    let messages = await db.Messages.find()
+        .sort({createdAt: 'desc'})
+        .populate("user", {
+          username: true,
+          profileImageUrl
+        });
+    return res.status(200).json(messages);
 
+  } catch (err) {
+    return next(err)
+  }  
+})
 
 
 //Error handler for whole app
