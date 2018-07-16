@@ -7,6 +7,7 @@ const cors = require("cors");
 const errorHandler = require("./handlers/error")
 
 const authRoutes = require('./routes/auth')
+const messagesRoutes = require('./routes/messages')
 
 const PORT = 8081;
 
@@ -15,6 +16,7 @@ app.use(bodyParser.json());
 
 //ROUTES
 app.use("/api/auth", authRoutes);
+app.use("/api/users/:id/messages", messagesRoutes);
 
 
 
