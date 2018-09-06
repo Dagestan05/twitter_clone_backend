@@ -11,7 +11,7 @@ const messagesRoutes = require('./routes/messages')
 // auth middlewares
 const { loginRequired, ensureCorrectUser } = require("./middleware/auth");
 
-const PORT = 8081;
+const PORT = process.env.PORT || 8081;
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -41,13 +41,13 @@ app.get("/api/messages", loginRequired, async function(req, res, next) {
 })
 
 
-//Error handler for whole app
+//Error handler for whole app. Errors for routes
 app.use(function(req, res, next){
   let err = new Error("Not Found!") // definig err for all app
   err.status = 404;
   next(err)
 })
-//Error handler middleware
+//Error handler middleware. respods w/ error msg. Will use above error handler
 app.use(errorHandler);
 
 

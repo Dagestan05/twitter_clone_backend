@@ -33,7 +33,7 @@ userSchema.pre('save', async function (next) {
     }
     //hashing password
     let hashedPassword = await bcrypt.hash(this.password, 10); // 10 == saltRounds
-    this.password = hashedPassword;
+    this.password = hashedPassword; //set the password field of the model 2b hashedPasswrd
     return next() // next == save
   } catch (err) {
     return next(err); // next(err) goes to errorHandler

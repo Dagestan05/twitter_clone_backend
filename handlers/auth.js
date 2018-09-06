@@ -58,6 +58,8 @@ exports.signin = async function(req, res, next){
         profileImageUrl,
         token
       })
+    }else{
+      return next({status: 400, message: 'Invalid Email/Password'})
     }
   } catch (err) {
     return next({status: 400, message: 'Invalid Email/Password'})

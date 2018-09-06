@@ -1,11 +1,13 @@
 const mongoose = require('mongoose')
 
-mongoose.set('debug', true)// for live watch of mongo queries
+mongoose.set('debug', true)// for live watch of mongo queries during developnt
 
 mongoose.Promise = Promise // use native es6 promises instead of cbacks
 
-mongoose.connect("mongodb://localhost/twitterclone", {
-  keepAlive: true
+// mongoose.connect("mongodb://localhost:27017/twitterclone", {
+mongoose.connect(process.env.MONGODB_URI, {
+  keepAlive: true,
+  useNewUrlParser: true
 });
 
 

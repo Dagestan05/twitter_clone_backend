@@ -1,5 +1,11 @@
 const db = require("../models");
 
+/* 
+POST request to /api/users/:id/messages
+headers: "Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjViOTA2ZjFmMjUwZGQwMjMxMzFkY2MyYSIsInVzZXJuYW1lIjoiTWFnYTIyIiwiaWF0IjoxNTM2MTk1MjI4fQ.7JXvTffBYRVsuoZyvRa6R0tVkEa3dyHK_IROHf47S1U"
+body: text:"Good post"
+*/
+
 exports.createMessage = async function(req, res, next){
   try{
     let message = await db.Message.create({
@@ -16,7 +22,17 @@ exports.createMessage = async function(req, res, next){
       profileImageUrl: true
     });
     return res.status(200).json(foundMessage);
+    /* response
+    "_id": "5b907e4c3d87f228b1ab9bb1",
+    "createdAt": "2018-09-06T01:09:32.363Z",
+    "text": "Good post",
+    "updatedAt": "2018-09-06T01:09:32.363Z",
+    "user": {
+        "_id": "5b906f1f250dd023131dcc2a",
+        "username": "Maga22"
+    }
 
+    */
   }catch(err){
     next(err)
   }
