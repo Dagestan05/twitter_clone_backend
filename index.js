@@ -4,6 +4,8 @@ const app = express();
 const bodyParser = require('body-parser');
 const cors = require("cors");
 
+const db = require("./models");
+
 const errorHandler = require("./handlers/error")
 
 const authRoutes = require('./routes/auth')
@@ -27,15 +29,17 @@ app.use(
 //get all messages of a specfic user
 app.get("/api/messages", loginRequired, async function(req, res, next) {
   try {
-    let messages = await db.Messages.find()
+    console.log('tried')
+    let messages = await db.Message.find()
         .sort({createdAt: 'desc'})
         .populate("user", {
           username: true,
-          profileImageUrl
+          profileImageUrl: true
         });
     return res.status(200).json(messages);
 
   } catch (err) {
+    console.log('err', err);
     return next(err)
   }  
 })
